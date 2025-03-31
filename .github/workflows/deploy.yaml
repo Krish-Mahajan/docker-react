@@ -15,20 +15,11 @@ jobs:
 
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: deployment-package
-          path: deploy.zip
 
-  deploy:
-    needs: build
+  deploy: # This is the missing job definition
+    needs: build # Make sure it runs after the build job
     runs-on: ubuntu-latest
     steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: deployment-package
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
         with:
